@@ -113,28 +113,121 @@ urlBase = urlBase.replace('dw-select.js', '');
     },
     hideOptions: function($el, inputData, options){
 
-      let $option = $el.find('.dw-option').toArray();
+      if( options.data[0].hasOwnProperty('group') ){
+
+        let firstLetter = inputData.charAt(0);
+        (firstLetter == ':') ? methods.hideGroups($el, inputData, options) : methods.hideOption($el, inputData, options);
+
+      }
+
+    },
+    hideOption: function($el, inputData, options){
+      let $option = $el.find('.option').toArray();
 
       $option.forEach(opt => {
+
         const $opt = $(opt);
-        let temp = $opt.inputData('content');
-        temp = temp.toLowerCase();
-        data = data.toLowerCase();
-        ( temp.indexOf(data) != -1 ) ? $opt.show() : $opt.hide();
+        let tempPrimary = $opt.find('.primary').text();
+        let tempSecundary = $opt.find('.secundary').text();
+
+        tempPrimary = tempPrimary.toLowerCase();
+        tempSecundary = tempSecundary.toLowerCase();
+
+        inputData = inputData.toLowerCase();
+
+        ( tempPrimary.indexOf(inputData) != -1 || tempSecundary.indexOf(inputData) != -1 ) ? $opt.show() : $opt.hide();
+        // previene cuando no hay input
+        ( inputData == '') ? $opt.show() : false;
+
+
       });
+    },
+    hideGroups: function($el, inputData, options){
+      let $groups = $el.find('.options .group').toArray();
+
+      $groups.forEach(grp => {
+        const $grp = $(grp);
+        let temp = $grp.find('.title .name').text()
+
+        if ( inputData.indexOf(' ') != -1 ){
+          let optTemp = inputData.split(' ');
+
+          optTemp[0] = optTemp[0].toLowerCase();
+          optTemp[0] = optTemp[0].replace(':','');
+          ( temp.indexOf(optTemp[0]) != -1 ) ? $grp.show() : $grp.hide();
+          ( temp.indexOf(optTemp[0]) != -1 ) ? $grp.next().show() : $grp.next().hide();
+
+          // previene cuando no hay input
+          ( inputData == '') ? $grp.show() : false;
+          ( inputData == '') ? $grp.next().show() : false;
+
+          let $option = $el.find('.option').toArray();
+
+          $option.forEach(opt => {
+
+            const $opt = $(opt);
+            let tempPrimary = $opt.find('.primary').text();
+            let tempSecundary = $opt.find('.secundary').text();
+
+            tempPrimary = tempPrimary.toLowerCase();
+            tempSecundary = tempSecundary.toLowerCase();
+
+            optTemp[1] = optTemp[1].toLowerCase();
+
+            ( tempPrimary.indexOf(optTemp[1]) != -1 || tempSecundary.indexOf(optTemp[1]) != -1 ) ? $opt.show() : $opt.hide();
+
+            // previene cuando no hay input
+            ( inputData == '') ? $opt.show() : false;
+            ( inputData == '') ? $opt.show() : false;
+
+          });
+
+        }else{
+
+          temp = temp.toLowerCase();
+          inputData = inputData.replace(':','');
+          inputData = inputData.toLowerCase();
+          ( temp.indexOf(inputData) != -1 ) ? $grp.show() : $grp.hide();
+          ( temp.indexOf(inputData) != -1 ) ? $grp.next().show() : $grp.next().hide();
+        }
+      });
+
+
+      // let $option = $el.find('.option').toArray();
+      //
+      // $option.forEach(opt => {
+      //
+      //   const $opt = $(opt);
+      //   let tempPrimary = $opt .find('.primary').text();
+      //   let tempSecundary = $opt .find('.secundary').text();
+      //
+      //   tempPrimary = tempPrimary.toLowerCase();
+      //   tempSecundary = tempSecundary.toLowerCase();
+      //
+      //   inputData = inputData.toLowerCase();
+      //
+      //   ( tempPrimary.indexOf(inputData) != -1 ) ? $opt.show() : $opt.hide();
+      //   ( tempSecundary.indexOf(inputData) != -1 ) ? $opt.show() : $opt.hide();
+      // });
 
     }
 
   }
 
+
+
+
   // Events
     var events = {
+
       start: function($el, options){
         events.onSearch($el, options);
         events.clearSearch($el, options);
       },
-      toggleContent: function($el, options){
+
+      toggleGroup: function($el, options){
       },
+
       onSearch: function($el, options){
         let $search = $el.find('.search input');
         let $clear = $el.find('.clear');
@@ -157,6 +250,7 @@ urlBase = urlBase.replace('dw-select.js', '');
           }
         });
       },
+
       clearSearch: function($el, options){
         let $search = $el.find('.search input');
         let $clear = $el.find('.clear');
@@ -165,12 +259,9 @@ urlBase = urlBase.replace('dw-select.js', '');
             $search.val('');
             methods.hideOptions($el, $search.val(), options);
             ($search.val().length > 0) ? $clear.removeClass('hide') : $clear.addClass('hide');
+            ($search.val().length > 0) ? $search.removeClass('glass') : $search.addClass('glass');
           }
         })
-      },
-      checkboxes: function($el){
-      },
-      selectChain: function($el){
       }
     };
 
