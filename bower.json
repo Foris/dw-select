@@ -1,0 +1,31 @@
+{
+  "name": "dw-select",
+  "authors": [
+    "daniel-llach <daniel.llach@gmail.com>"
+  ],
+  "description": "A select component for darwinEd",
+  "main": [
+    "components/dw-selector.js",
+    "components/dw-selector.css"
+  ],
+  "moduleType": "amd",
+  "keywords": [
+    "select",
+    "dw",
+    "darwined"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.1",
+    "vue": "^1.0.17",
+    "underscore": "^1.8.3"
+  }
+}
