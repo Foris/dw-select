@@ -60,7 +60,7 @@ urlBase = urlBase.replace('dw-select.js', '');
       // If has groups, paint groups containers
       if( data.hasOwnProperty('group') ){
         // define groups
-        let groups =  _.chain(options.data).flatten().pluck('group').flatten().unique().value();
+        let groups =  _.chain(options.data).flatten().pluck('group').flatten().unique().value().sort();
 
         // paint groups containers
         _.each(groups, function(group){
@@ -71,8 +71,10 @@ urlBase = urlBase.replace('dw-select.js', '');
         $.get(urlBase + "templates/options.html", function( result ) {
             let template = _.template(result);
 
+            let data = _.sortBy(options['data'], 'primary');
+
             // options each
-            options['data'].forEach(data => {
+            data.forEach(data => {
               let contentHtml = template({
                 id: data['id'],
                 primary: data['primary'],
@@ -87,21 +89,25 @@ urlBase = urlBase.replace('dw-select.js', '');
 
       }else{
         // no groups
+        // put options into its group
+        $.get(urlBase + "templates/options.html", function( result ) {
+            let template = _.template(result);
+
+            let data = _.sortBy(options['data'], 'primary');
+
+            // options each
+            options['data'].forEach(data => {
+              let contentHtml = template({
+                id: data['id'],
+                primary: data['primary'],
+                secundary: data['secundary'],
+                selected: data['selected']
+              });
+              $el.find('content > .options').append(contentHtml);
+            });
+          });
       }
 
-
-      // $.get(urlBase + "templates/groups.html", function( result ) {
-      //     let template = _.template(result);
-      //     // groups each
-      //
-      //     // options each
-      //     options['data'].forEach(data => {
-      //       // let contentHtml = template({
-      //       //   key: data[key],
-      //       //   value: data[value]
-      //       // });
-      //       // $el.find('.dw-options').append(contentHtml);
-      //     });
 
     },
     nogroupTemplate: function($el, options){
