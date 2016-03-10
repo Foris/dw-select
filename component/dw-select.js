@@ -44,9 +44,7 @@ urlBase = urlBase.replace('dw-select.js', '');
     setTemplate : function($el, templateContent, options){
 
       let template = _.template(templateContent);
-      $el.html( template({
-        placeholder: options.placeholder
-      }) );
+      $el.html( template() );
 
       if (typeof options !== 'undefined') {
         methods.optionTemplate($el, options)
@@ -85,6 +83,8 @@ urlBase = urlBase.replace('dw-select.js', '');
               let group = data['group'];
               $el.find('.' + group + '.group-content').append(contentHtml);
             });
+
+            events.start($el, options);
           });
 
       }else{
@@ -105,13 +105,23 @@ urlBase = urlBase.replace('dw-select.js', '');
               });
               $el.find('content > .options').append(contentHtml);
             });
+
+            events.start($el, options);
           });
       }
 
-
     },
-    nogroupTemplate: function($el, options){
-      // template = "templates/nogroups.html"
+    hideOptions: function($el, inputData, options){
+
+      let $option = $el.find('.dw-option').toArray();
+
+      $option.forEach(opt => {
+        const $opt = $(opt);
+        let temp = $opt.inputData('content');
+        temp = temp.toLowerCase();
+        data = data.toLowerCase();
+        ( temp.indexOf(data) != -1 ) ? $opt.show() : $opt.hide();
+      });
 
     }
 
@@ -120,10 +130,43 @@ urlBase = urlBase.replace('dw-select.js', '');
   // Events
     var events = {
       start: function($el, options){
+        events.onSearch($el, options);
+        events.clearSearch($el, options);
       },
       toggleContent: function($el, options){
       },
       onSearch: function($el, options){
+        let $search = $el.find('.search input');
+        let $clear = $el.find('.clear');
+
+        console.log("$clear: ", $clear);
+
+        $search.on({
+          keyup: function(event){
+            var inputData = $search.val();
+            methods.hideOptions($el, inputData, options);
+
+            // show/hide clear icon
+            ($search.val().length > 0) ? $clear.removeClass('hide') : $clear.addClass('hide');
+          },
+          focus: function(event){
+            $search.removeClass('glass');
+          },
+          focusout: function(event){
+            ($search.val().length > 0) ? $search.removeClass('glass') : $search.addClass('glass');
+          }
+        });
+      },
+      clearSearch: function($el, options){
+        let $search = $el.find('.search input');
+        let $clear = $el.find('.clear');
+        $clear.on({
+          click: function(event){
+            $search.val('');
+            methods.hideOptions($el, $search.val(), options);
+            ($search.val().length > 0) ? $clear.removeClass('hide') : $clear.addClass('hide');
+          }
+        })
       },
       checkboxes: function($el){
       },
