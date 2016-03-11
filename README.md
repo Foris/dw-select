@@ -6,7 +6,7 @@
 
 A smart select component to Darwined.
 
-<img src="https://github.com/daniel-llach/dw-select/blob/master/img/dw-img1.png?raw=true">
+<img src="https://raw.githubusercontent.com/daniel-llach/dw-select/master/img/img1.png">
 
 **dwSelect** show *options* divide into *groups*, one option can be insert in many groups.
 
@@ -16,19 +16,19 @@ Every **option** has a *primary text* that is the main content and a *secundary*
 
 ## filter all options:
 
-<img src="https://github.com/daniel-llach/dw-select/blob/master/img/dw-img2.png?raw=true">
+<img src="https://raw.githubusercontent.com/daniel-llach/dw-select/master/img/img2.png">
 
 Just type what you want and *dwSelect* search you text into **all primary and secondly content in every groups**
 
 ## filter by groups
 
-<img src="https://github.com/daniel-llach/dw-select/blob/master/img/dw-img3.png?raw=true">
+<img src="https://raw.githubusercontent.com/daniel-llach/dw-select/master/img/img3.png">
 
 If yo begin typing whit a **colon** ( **:** ), *dwSelect* interprets that you want to **search by groups, and show only the groups that match whit you text**.
 
 ## filter by groups and options
 
-<img src="https://github.com/daniel-llach/dw-select/blob/master/img/dw-img4.png?raw=true">
+<img src="https://raw.githubusercontent.com/daniel-llach/dw-select/master/img/img4.png">
 
 If you filter by groups and add a **space** the next word **filter the options o the filter groups**.
 
