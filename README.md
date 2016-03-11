@@ -4,9 +4,11 @@
 
 ---
 
-A smart select component to Darwined.
+A smart select component to **Darwined**.
 
 <img src="https://raw.githubusercontent.com/daniel-llach/dw-select/master/img/img1.png">
+
+* live example: http://daniel-llach.github.io/dw-select/
 
 **dwSelect** show *options* divide into *groups*, one option can be insert in many groups.
 
