@@ -62,6 +62,8 @@ If you filter by groups and add a **space** the next word **filter the options o
 
 # 2.- Use
 
+---
+
 Execute the dwFilter class on a selector. It will be rendered a dw-filter element in this container inherit its position and width.
 
 ```javascript
