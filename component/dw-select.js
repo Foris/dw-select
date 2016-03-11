@@ -20,8 +20,13 @@ urlBase = urlBase.replace('dw-select.js', '');
       })
     },
     destroy: function(){
+      const $el = $(this);
+      $el.empty();
+      $el.removeClass('dw-select');
     },
     val: function($el){
+      (typeof $el === 'undefined' || $el === null ) ? $el = $(this) : null;
+      methods.getVal($el);
     }
   }
 
@@ -167,7 +172,6 @@ urlBase = urlBase.replace('dw-select.js', '');
 
           optTemp[0] = optTemp[0].toLowerCase();
           optTemp[0] = optTemp[0].replace(':','');
-          console.log("optTemp[0]: ", optTemp[0]);
           ( tempInput.indexOf(optTemp[0]) != -1 ) ? $grp.show() : $grp.hide();
           ( tempInput.indexOf(optTemp[0]) != -1 ) ? $grp.next().show() : $grp.next().hide();
 
@@ -203,61 +207,59 @@ urlBase = urlBase.replace('dw-select.js', '');
       });
 
     }
-
   }
 
 
 
 
   // Events
-    var events = {
+  var events = {
 
-      start: function($el, options){
-        events.onSearch($el, options);
-        events.clearSearch($el, options);
-      },
+    start: function($el, options){
+      events.onSearch($el, options);
+      events.clearSearch($el, options);
+    },
 
-      toggleGroup: function($el, options){
-      },
+    toggleGroup: function($el, options){
+    },
 
-      onSearch: function($el, options){
-        let $search = $el.find('.search input');
-        let $clear = $el.find('.clear');
+    onSearch: function($el, options){
+      let $search = $el.find('.search input');
+      let $clear = $el.find('.clear');
 
-        console.log("$clear: ", $clear);
+      $search.on({
+        keyup: function(event){
+          var inputData = $search.val();
+          methods.hideOptions($el, inputData, options);
 
-        $search.on({
-          keyup: function(event){
-            var inputData = $search.val();
-            methods.hideOptions($el, inputData, options);
+          // show/hide clear icon
+          ($search.val().length > 0) ? $clear.removeClass('hide') : $clear.addClass('hide');
+        },
+        focus: function(event){
+          $search.removeClass('glass');
+        },
+        focusout: function(event){
+          ($search.val().length > 0) ? $search.removeClass('glass') : $search.addClass('glass');
+        }
+      });
+    },
 
-            // show/hide clear icon
-            ($search.val().length > 0) ? $clear.removeClass('hide') : $clear.addClass('hide');
-          },
-          focus: function(event){
-            $search.removeClass('glass');
-          },
-          focusout: function(event){
-            ($search.val().length > 0) ? $search.removeClass('glass') : $search.addClass('glass');
-          }
-        });
-      },
+    clearSearch: function($el, options){
+      let $search = $el.find('.search input');
+      let $clear = $el.find('.clear');
+      $clear.on({
+        click: function(event){
+          $search.val('');
+          methods.hideOptions($el, $search.val(), options);
+          ($search.val().length > 0) ? $clear.removeClass('hide') : $clear.addClass('hide');
+          ($search.val().length > 0) ? $search.removeClass('glass') : $search.addClass('glass');
+          // restart contents
+          methods.restart($el);
+        }
+      })
+    }
 
-      clearSearch: function($el, options){
-        let $search = $el.find('.search input');
-        let $clear = $el.find('.clear');
-        $clear.on({
-          click: function(event){
-            $search.val('');
-            methods.hideOptions($el, $search.val(), options);
-            ($search.val().length > 0) ? $clear.removeClass('hide') : $clear.addClass('hide');
-            ($search.val().length > 0) ? $search.removeClass('glass') : $search.addClass('glass');
-            // restart contents
-            methods.restart($el);
-          }
-        })
-      }
-    };
+  };
 
 
   // jquery component stuff
