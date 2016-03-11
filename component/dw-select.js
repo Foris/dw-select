@@ -27,11 +27,7 @@ urlBase = urlBase.replace('dw-select.js', '');
     val: function($el){
       (typeof $el === 'undefined' || $el === null ) ? $el = $(this) : null;
       methods.getVal($el);
-    }
-  }
-
-  // Private methods
-  let methods = {
+    },
     restart: function($el){
       // previene cuando no hay input
       let $groups = $el.find('.options .group');
@@ -43,7 +39,15 @@ urlBase = urlBase.replace('dw-select.js', '');
       let $options = $el.find('.options .option');
       $options.show();
 
+      // deselect
+      $options.removeClass('selected')
+      $el.data('result','')
+
     },
+  }
+
+  // Private methods
+  let methods = {
 
     deployComponent: function($el, options){
       // convert the div into a dw-filter component
@@ -267,7 +271,7 @@ urlBase = urlBase.replace('dw-select.js', '');
           ($search.val().length > 0) ? $clear.removeClass('hide') : $clear.addClass('hide');
           ($search.val().length > 0) ? $search.removeClass('glass') : $search.addClass('glass');
           // restart contents
-          methods.restart($el);
+          api.restart($el);
         }
       })
     },
