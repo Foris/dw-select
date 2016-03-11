@@ -110,15 +110,15 @@ $('#sample1').dwSelect({
 
 The next are the fields of an option object:
 
-### 3.1.1.- id: An identifier
+- - id: An identifier
 
-### 3.1.2.- primary: The text that show in the first line of an option
+- - primary: The text that show in the first line of an option
 
-### 3.1.3.- secundary: The text that show in the second line of an option
+- - secundary: The text that show in the second line of an option
 
-### 3.1.4.- selected: Indicate if this particular options has selected
+- - selected: Indicate if this particular options has selected
 
-### 3.1.5.- group: The groups where the option will be inserted, one option can be insert in many groups
+- - group: The groups where the option will be inserted, one option can be insert in many groups
 
 
 ## 3.3.- Destroy
