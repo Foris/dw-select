@@ -8,29 +8,29 @@ A smart select component to Darwined.
 
 (here component image)
 
-This select show options divide into groups, one option can be insert in many groups.
+**dwSelect** show *options* divide into *groups*, one option can be insert in many groups.
 
-Every option has a primary text that is the main content and a secundary text that is a context or specific content for that options
+Every **option** has a *primary text* that is the main content and a *secundary* text that is a context or specific content for that options
 
-dwSelect has its own search sintax:
+**dwSelect** has its own *search sintax*:
 
 ## filter all options:
 
 (image)
 
-Just type what you want and dwSelect seacrh you text into all primary and secondly content in every groups
+Just type what you want and *dwSelect* search you text into **all primary and secondly content in every groups**
 
 ## filter by groups
 
 (image)
 
-If yo begin typing whit a colon ( **:** ), dwSelect interprets that you want to search by groups, and show only the groups that match whit you text
+If yo begin typing whit a **colon** ( **:** ), *dwSelect* interprets that you want to **search by groups, and show only the groups that match whit you text**.
 
 ## filter by groups and options
 
 (image)
 
-If you filter by groups and add a space the next word filter the options o the filter groups.
+If you filter by groups and add a **space** the next word **filter the options o the filter groups**.
 
 
 # Index
@@ -63,6 +63,7 @@ If you filter by groups and add a space the next word filter the options o the f
 # 2.- Use
 
 Execute the dwFilter class on a selector. It will be rendered a dw-filter element in this container inherit its position and width.
+
 ```javascript
 $('#id').dwFilter();
 ```
