@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title>dw-filter</title>
+    <title>dw-select</title>
 
     <!-- context style -->
     <link rel="stylesheet" type="text/css" href="./css/style.css">
@@ -96,4 +96,13 @@
         }
       ]
     })
+
+    // listeners
+    var smpl1 = $('#sample1');
+    smpl1.on({
+      change: function(event){
+        var result = smpl1.data('result');
+        console.log("sample1 data: ", result);
+      }
+    });
   </script>

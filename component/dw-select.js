@@ -206,6 +206,21 @@ urlBase = urlBase.replace('dw-select.js', '');
         }
       });
 
+    },
+    getVal: function($el){
+      // update $el data
+      let options = $el.find('.options .option.selected').toArray();
+      let ids = [];
+      for(let i in options){
+        let $opt = $(options[i]);
+        ids.push($opt.data('id'));
+      }
+      $el.data('result', ids);
+      methods.passResult($el);
+      return ids;
+    },
+    passResult: function($el){
+      $el.trigger('change');
     }
   }
 
@@ -218,11 +233,10 @@ urlBase = urlBase.replace('dw-select.js', '');
     start: function($el, options){
       events.onSearch($el, options);
       events.clearSearch($el, options);
+      events.clickOption($el, options);
     },
-
     toggleGroup: function($el, options){
     },
-
     onSearch: function($el, options){
       let $search = $el.find('.search input');
       let $clear = $el.find('.clear');
@@ -243,7 +257,6 @@ urlBase = urlBase.replace('dw-select.js', '');
         }
       });
     },
-
     clearSearch: function($el, options){
       let $search = $el.find('.search input');
       let $clear = $el.find('.clear');
@@ -255,6 +268,19 @@ urlBase = urlBase.replace('dw-select.js', '');
           ($search.val().length > 0) ? $search.removeClass('glass') : $search.addClass('glass');
           // restart contents
           methods.restart($el);
+        }
+      })
+    },
+    clickOption: function($el, options){
+      let $options = $el.find('.options .option');
+      $options.on({
+        click: function(event){
+          event.preventDefault();
+          event.stopPropagation();
+          // mark as selected
+          $options.removeClass('selected');
+          $(event.target).parent().toggleClass('selected');
+          api.val($el);
         }
       })
     }
