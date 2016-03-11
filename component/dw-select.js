@@ -27,6 +27,19 @@ urlBase = urlBase.replace('dw-select.js', '');
 
   // Private methods
   let methods = {
+    restart: function($el){
+      // previene cuando no hay input
+      let $groups = $el.find('.options .group');
+      let $groupsContent = $el.find('.options .group-content');
+      $groups.show();
+      $groupsContent.show();
+
+      // previene cuando no hay input
+      let $options = $el.find('.options .option');
+      $options.show();
+
+    },
+
     deployComponent: function($el, options){
       // convert the div into a dw-filter component
       $el.addClass('dw-select');
@@ -116,7 +129,7 @@ urlBase = urlBase.replace('dw-select.js', '');
       if( options.data[0].hasOwnProperty('group') ){
 
         let firstLetter = inputData.charAt(0);
-        (firstLetter == ':') ? methods.hideGroups($el, inputData, options) : methods.hideOption($el, inputData, options);
+        (firstLetter != ':') ? methods.hideOption($el, inputData, options) : methods.hideGroups($el, inputData, options);
 
       }
 
@@ -136,30 +149,31 @@ urlBase = urlBase.replace('dw-select.js', '');
         inputData = inputData.toLowerCase();
 
         ( tempPrimary.indexOf(inputData) != -1 || tempSecundary.indexOf(inputData) != -1 ) ? $opt.show() : $opt.hide();
-        // previene cuando no hay input
-        ( inputData == '') ? $opt.show() : false;
-
 
       });
+
     },
     hideGroups: function($el, inputData, options){
       let $groups = $el.find('.options .group').toArray();
 
       $groups.forEach(grp => {
         const $grp = $(grp);
-        let temp = $grp.find('.title .name').text()
+        let tempInput = $grp.find('.title .name').text()
 
         if ( inputData.indexOf(' ') != -1 ){
           let optTemp = inputData.split(' ');
 
+          // groups
+
           optTemp[0] = optTemp[0].toLowerCase();
           optTemp[0] = optTemp[0].replace(':','');
-          ( temp.indexOf(optTemp[0]) != -1 ) ? $grp.show() : $grp.hide();
-          ( temp.indexOf(optTemp[0]) != -1 ) ? $grp.next().show() : $grp.next().hide();
+          console.log("optTemp[0]: ", optTemp[0]);
+          ( tempInput.indexOf(optTemp[0]) != -1 ) ? $grp.show() : $grp.hide();
+          ( tempInput.indexOf(optTemp[0]) != -1 ) ? $grp.next().show() : $grp.next().hide();
 
-          // previene cuando no hay input
-          ( inputData == '') ? $grp.show() : false;
-          ( inputData == '') ? $grp.next().show() : false;
+
+
+          // options
 
           let $option = $el.find('.option').toArray();
 
@@ -176,39 +190,17 @@ urlBase = urlBase.replace('dw-select.js', '');
 
             ( tempPrimary.indexOf(optTemp[1]) != -1 || tempSecundary.indexOf(optTemp[1]) != -1 ) ? $opt.show() : $opt.hide();
 
-            // previene cuando no hay input
-            ( inputData == '') ? $opt.show() : false;
-            ( inputData == '') ? $opt.show() : false;
-
           });
 
         }else{
 
-          temp = temp.toLowerCase();
+          tempInput = tempInput.toLowerCase();
           inputData = inputData.replace(':','');
           inputData = inputData.toLowerCase();
-          ( temp.indexOf(inputData) != -1 ) ? $grp.show() : $grp.hide();
-          ( temp.indexOf(inputData) != -1 ) ? $grp.next().show() : $grp.next().hide();
+          ( tempInput.indexOf(inputData) != -1 ) ? $grp.show() : $grp.hide();
+          ( tempInput.indexOf(inputData) != -1 ) ? $grp.next().show() : $grp.next().hide();
         }
       });
-
-
-      // let $option = $el.find('.option').toArray();
-      //
-      // $option.forEach(opt => {
-      //
-      //   const $opt = $(opt);
-      //   let tempPrimary = $opt .find('.primary').text();
-      //   let tempSecundary = $opt .find('.secundary').text();
-      //
-      //   tempPrimary = tempPrimary.toLowerCase();
-      //   tempSecundary = tempSecundary.toLowerCase();
-      //
-      //   inputData = inputData.toLowerCase();
-      //
-      //   ( tempPrimary.indexOf(inputData) != -1 ) ? $opt.show() : $opt.hide();
-      //   ( tempSecundary.indexOf(inputData) != -1 ) ? $opt.show() : $opt.hide();
-      // });
 
     }
 
@@ -260,6 +252,8 @@ urlBase = urlBase.replace('dw-select.js', '');
             methods.hideOptions($el, $search.val(), options);
             ($search.val().length > 0) ? $clear.removeClass('hide') : $clear.addClass('hide');
             ($search.val().length > 0) ? $search.removeClass('glass') : $search.addClass('glass');
+            // restart contents
+            methods.restart($el);
           }
         })
       }
