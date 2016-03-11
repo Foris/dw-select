@@ -106,7 +106,6 @@ $('#sample1').dwSelect({
 });
 ```
 
----
 
 The next are the fields of an option object:
 
@@ -120,8 +119,9 @@ The next are the fields of an option object:
 
 - **group:** The groups where the option will be inserted, one option can be insert in many groups
 
+---
 
-## 3.3.- Destroy
+## 3.2.- Destroy
 This methods empty the container div and remove class too.
 ```javascript
 $('#id').dwFilter('destroy');
